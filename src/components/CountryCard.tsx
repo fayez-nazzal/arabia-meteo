@@ -70,18 +70,18 @@ const useStyles = makeStyles<never, IStylesProps>({
     height: "100px",
     backgroundColor: (props) =>
       props.hoverCountry?.name === props.name
-        ? "rgba(255, 255, 255, 0.6)"
-        : "rgba(255, 255, 255, 0.25)",
+        ? "rgba(210, 210, 210, 0.6)"
+        : "rgba(210, 210, 210, 0.25)",
     boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
-    backdropFilter: "blur(3.5px)",
-    WebkitBackdropFilter: "blur(3.5px)",
+    backdropFilter: "blur(1.5px)",
+    WebkitBackdropFilter: "blur(1.5px)",
     borderRadius: "10px",
     boxSizing: "border-box",
     opacity: (props) => (props.currentCountry ? 0 : 1),
     border: (props) =>
       props.hoverCountry?.name === props.name
-        ? "2px solid rgba(255, 255, 255, 0.9)"
-        : "2px solid rgba(255, 255, 255, 0.28)",
+        ? "2px solid rgba(210, 210, 210, 0.9)"
+        : "2px solid rgba(210, 210, 210, 0.28)",
     zIndex: 10,
     transition: "all 0.16s ease-in",
     pointerEvents: (props) => (props.currentCountry ? "none" : "all"),
@@ -94,6 +94,7 @@ const useStyles = makeStyles<never, IStylesProps>({
   content: {
     flex: "1 0 auto",
     alignSelf: "center",
+    color: "white",
   },
   cover: {
     backgroundSize: "cover",

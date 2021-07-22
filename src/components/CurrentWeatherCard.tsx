@@ -3,35 +3,27 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-import { ICountryInfo, IWeatherInfo } from "../redux/types";
+import { IWeatherInfo } from "../redux/types";
+import clsx from "clsx";
+import TemperatureText from "./TemperatureText";
 
 interface PropTypes {
-  country: ICountryInfo;
   weather: IWeatherInfo;
+  className: string | null;
 }
 
 const CurrentWeatherCard = (props: PropTypes) => {
-  const classes = useStyles({
-    country: props.country,
-  });
+  const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={clsx(classes.root, props.className)}>
       <CardContent className={classes.content}>
         <div className={classes.media}>
           <Typography variant="body1">Last update</Typography>
           <Typography variant="body2">{props.weather.last_updated}</Typography>
           <div className={classes.tempMedia}>
             <img width="140px" src={props.weather.condition.icon} alt="icon" />
-            <Typography variant="h3" className={classes.tempText}>
-              {props.weather.temp_c}
-              <div className={classes.tempUnit}>
-                <span>°</span>
-                <Typography variant="body1" className={classes.tempUnitLetter}>
-                  C
-                </Typography>
-              </div>
-            </Typography>
+            <TemperatureText temp={props.weather.temp_c} />
           </div>
           <Typography variant="h5">{props.weather.condition.text}</Typography>
         </div>
@@ -71,11 +63,7 @@ const CurrentWeatherCard = (props: PropTypes) => {
 
 export default CurrentWeatherCard;
 
-interface IStylesProps {
-  country: ICountryInfo;
-}
-
-const useStyles = makeStyles<never, IStylesProps>({
+const useStyles = makeStyles({
   root: {
     display: "flex",
   },
@@ -93,26 +81,12 @@ const useStyles = makeStyles<never, IStylesProps>({
     display: "flex",
     alignItems: "center",
   },
-  tempText: {
-    display: "flex",
-    marginLeft: "-24px",
-  },
-  tempUnit: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  tempUnitLetter: {
-    marginTop: "-30px",
-    marginLeft: "2px",
-    fontSize: "20px",
-    color: "#777777",
-  },
   info: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    marginLeft: "12px",
-    paddingLeft: "12px",
+    marginLeft: "28px",
+    paddingLeft: "28px",
     borderLeft: "1px solid #777777",
   },
   infoLine: {
