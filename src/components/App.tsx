@@ -2,16 +2,20 @@ import CountriesList from "./CountriesList";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import BackgroundImage from "./BackgroundImage";
 import CountryModal from "./CountryModal";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
+import theme from "./Theme";
 
 function App() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <BackgroundImage />
-      <CountriesList />
-      <CountryModal />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <BackgroundImage />
+        <CountriesList />
+        <CountryModal />
+      </div>
+    </ThemeProvider>
   );
 }
 
