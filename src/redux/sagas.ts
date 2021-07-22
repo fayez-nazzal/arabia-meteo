@@ -18,8 +18,8 @@ import {
 export const countriesURL = "http://localhost:4000/api/countries";
 export const countryWeatherURL = (countryName: string) =>
   `https://api.weatherapi.com/v1/current.json?key=a9d0564f306040bf89c71006211507&q=${countryName}&aqi=no`;
-export const countryWeatherForecastURL =
-  "https://api.weatherapi.com/v1/forecast.json?key=a9d0564f306040bf89c71006211507&q=Palestine Qabatiya&days=4&aqi=no&alerts=no";
+export const countryWeatherForecastURL = (countryName: string) =>
+  `https://api.weatherapi.com/v1/forecast.json?key=a9d0564f306040bf89c71006211507&q=${countryName}&days=3&aqi=no&alerts=no`;
 
 export async function api<T>(url: string): Promise<T> {
   const res = await fetch(url);
@@ -46,7 +46,7 @@ export function* fetchCountryWeatherSaga() {
     );
     const weather: ICountryWeather = yield call(
       api,
-      countryWeatherURL(`${country.name} ${country.capital}`)
+      countryWeatherURL(country.capital)
     );
     yield put(getCountryWeatherSuccess(weather));
   } catch (error) {
@@ -56,9 +56,17 @@ export function* fetchCountryWeatherSaga() {
 
 export function* fetchCountryWeatherForecastSaga() {
   try {
+    const country: ReturnType<typeof currentCountrySelector> = yield select(
+      currentCountrySelector
+    );
+
     const weatherForecast: ICountryWeatherForecast = yield call(
       api,
-      countryWeatherForecastURL
+      countryWeatherForecastURL(
+        country.name === "Yemen"
+          ? `${country.name} ${country.capital}`
+          : country.capital
+      )
     );
     yield put(getCountryWeatherForecastSuccess(weatherForecast));
   } catch (error) {

@@ -58,7 +58,7 @@ export function getCountriesFailure(
   };
 }
 
-export function getCountryWeatherForecast(): IGetCountryWeatherAction {
+export function getCountryWeather(): IGetCountryWeatherAction {
   return {
     type: EActionTypes.GET_COUNTRY_WEATHER,
   };
@@ -82,9 +82,9 @@ export function getCountryWeatherFailure(
   };
 }
 
-export function getCountryWeather(): IGetCountryWeatherAction {
+export function getCountryWeatherForecast(): IGetCountryWeatherForecastAction {
   return {
-    type: EActionTypes.GET_COUNTRY_WEATHER,
+    type: EActionTypes.GET_COUNTRY_WEATHER_FORECAST,
   };
 }
 

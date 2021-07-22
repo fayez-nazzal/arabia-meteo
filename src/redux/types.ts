@@ -41,15 +41,17 @@ export interface IWeatherInfo {
   wind_kph: number;
 }
 
-export interface IWeatherForecastInfo {
+export interface IWeatherDayInfo {
+  maxtemp_c: number;
+  maxtemp_f: number;
+  mintemp_c: number;
+  mintemp_f: number;
+  condition: IWeatherCondition;
+}
+
+export interface IWeatherForecastDay {
   date: string;
-  day: {
-    maxtemp_c: number;
-    maxtemp_f: number;
-    mintemp_c: number;
-    mintemp_f: number;
-    condition: IWeatherCondition;
-  };
+  day: IWeatherDayInfo;
 }
 
 export interface ICountryInfo {
@@ -72,7 +74,9 @@ export interface ICountryWeather {
 
 export interface ICountryWeatherForecast {
   location: ISimpleCountryInfo;
-  forecast: IWeatherForecastInfo[];
+  forecast: {
+    forecastday: IWeatherForecastDay[];
+  };
 }
 
 export interface IAction {
