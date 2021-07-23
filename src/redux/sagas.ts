@@ -16,14 +16,7 @@ import {
   ICountryWeatherForecast,
 } from "./types";
 
-const development: boolean =
-  !process.env.NODE_ENV || process.env.NODE_ENV === "development";
-
-export const countriesURL = `${
-  development
-    ? "http://localhost:4000"
-    : "https://api-arab-countries.azurewebsites.net/"
-}/api/countries`;
+export const countriesURL = `https://api-arab-countries.azurewebsites.net/api/countries`;
 
 export const countryWeatherURL = (countryName: string) =>
   `https://api.weatherapi.com/v1/current.json?key=a9d0564f306040bf89c71006211507&q=${countryName}&aqi=no`;
@@ -39,6 +32,7 @@ export async function api<T>(url: string): Promise<T> {
 
 export function* fetchCountriesSaga() {
   try {
+    console.log(process.env.NODE_ENV);
     const countries: ICountryInfo[] = yield call(api, countriesURL);
     yield put(getCoutnriesSuccess(countries));
   } catch (error) {

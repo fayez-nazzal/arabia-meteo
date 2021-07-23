@@ -32,7 +32,6 @@ const BackgroundImage = () => {
       const imagesClone = [...images];
       imagesClone.splice(0, 1);
       setImages([...imagesClone]);
-      console.log(imagesClone.length);
     }
   }, [images]);
 
