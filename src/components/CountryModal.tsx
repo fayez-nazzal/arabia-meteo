@@ -43,6 +43,7 @@ const CountryModal = () => {
     } else {
       handleClose();
     }
+    // eslint-disable-next-line
   }, [currentCountry]);
 
   const handleClose = () => {
@@ -119,7 +120,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    animation: "$backdropAnimation 2s ease-in",
     backgroundColor: "rgba(232, 232, 232, 0.4)",
     backdropFilter: "blur(2.5px)",
     WebkitBackdropFilter: "blur(2.5px)",

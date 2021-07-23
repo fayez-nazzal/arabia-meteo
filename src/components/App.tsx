@@ -15,6 +15,8 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCountries());
+
+    // eslint-disable-next-line
   }, []);
 
   return (
