@@ -1,5 +1,6 @@
-import makeStyles from "@material-ui/core/styles/makeStyles";
 import { useEffect, useState } from "react";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import { v4 as uuid } from "uuid";
 import { useSelector } from "react-redux";
 import { IAppState, ICountryInfo } from "../redux/types";
 
@@ -17,13 +18,23 @@ const BackgroundImage = () => {
         <img
           className={classes.image}
           src={hoverCountry.image}
-          key={hoverCountry.name}
+          key={uuid()}
           alt={hoverCountry.name}
         />,
       ]);
     }
+
     // eslint-disable-next-line
   }, [hoverCountry]);
+
+  useEffect(() => {
+    if (images.length > 10) {
+      const imagesClone = [...images];
+      imagesClone.splice(0, 1);
+      setImages([...imagesClone]);
+      console.log(imagesClone.length);
+    }
+  }, [images]);
 
   return <>{images}</>;
 };
