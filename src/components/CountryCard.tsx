@@ -7,6 +7,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 
 import { setHoverCountry, setCurrentCountry } from "../redux/actions";
 import { ICountryInfo, IAppState } from "../redux/types";
+import { Theme } from "@material-ui/core/styles";
 
 interface PropTypes {
   country: ICountryInfo;
@@ -41,8 +42,8 @@ const CountryCard = (props: PropTypes) => {
       onMouseEnter={onMouseEnter}
       onClick={onClick}
     >
-      <div className={classes.details}>
-        <CardContent className={classes.content}>
+      <div className={classes.content}>
+        <CardContent className={classes.info}>
           <Typography variant="h5">{props.country.name}</Typography>
         </CardContent>
         <CardMedia
@@ -63,11 +64,10 @@ interface IStylesProps {
   name: string;
 }
 
-const useStyles = makeStyles<never, IStylesProps>({
+const useStyles = makeStyles<Theme, IStylesProps>((theme) => ({
   root: {
     animation: "$backdropAnimation 2s ease-in",
     display: "flex",
-    height: "100px",
     backgroundColor: (props) =>
       props.hoverCountry?.name === props.name
         ? "rgba(210, 210, 210, 0.6)"
@@ -86,23 +86,44 @@ const useStyles = makeStyles<never, IStylesProps>({
     transition: "all 0.16s ease-in",
     pointerEvents: (props) => (props.currentCountry ? "none" : "all"),
     cursor: (props) => (props.currentCountry ? "normal" : "pointer"),
-  },
-  details: {
-    display: "flex",
-    flexDirection: "row-reverse",
+    height: "80px",
+    [theme.breakpoints.up("sm")]: {
+      height: "100px",
+    },
   },
   content: {
+    display: "flex",
+    flexDirection: "column",
+    flex: "1",
+    alignItems: "stretch",
+    margin: "0.4rem",
+    justifyContent: "space-around",
+    [theme.breakpoints.up("sm")]: {
+      alignItems: "center",
+      flexDirection: "row-reverse",
+    },
+  },
+  info: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+    },
     flex: "1 0 auto",
     alignSelf: "center",
     color: "white",
   },
   cover: {
-    backgroundSize: "cover",
+    backgroundSize: "contain",
     backgroundPositionX: "center",
+    backgroundRepeat: "no-repeat",
     border: "none",
     borderRadius: "8px",
-    width: "80px",
-    margin: "0.8rem",
+    flex: "1 1 auto",
+    [theme.breakpoints.up("sm")]: {
+      flex: "none",
+      width: "80px",
+      height: "80px",
+    },
   },
   "@keyframes backdropAnimation": {
     "0%": {
@@ -120,4 +141,4 @@ const useStyles = makeStyles<never, IStylesProps>({
       WebkitBackdropFilter: "blur(3.5px)",
     },
   },
-});
+}));

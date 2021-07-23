@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
+import process from "process";
 import {
   getCoutnriesSuccess,
   getCountriesFailure,
@@ -15,9 +16,18 @@ import {
   ICountryWeatherForecast,
 } from "./types";
 
-export const countriesURL = "http://localhost:4000/api/countries";
+const development: boolean =
+  !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+
+export const countriesURL = `${
+  development
+    ? "http://localhost:4000"
+    : "https://api-arab-countries.azurewebsites.net/"
+}/api/countries`;
+
 export const countryWeatherURL = (countryName: string) =>
   `https://api.weatherapi.com/v1/current.json?key=a9d0564f306040bf89c71006211507&q=${countryName}&aqi=no`;
+
 export const countryWeatherForecastURL = (countryName: string) =>
   `https://api.weatherapi.com/v1/forecast.json?key=a9d0564f306040bf89c71006211507&q=${countryName}&days=3&aqi=no&alerts=no`;
 
@@ -36,7 +46,7 @@ export function* fetchCountriesSaga() {
   }
 }
 
-const currentCountrySelector = (state: IAppState) =>
+export const currentCountrySelector = (state: IAppState) =>
   state.currentCountry as ICountryInfo;
 
 export function* fetchCountryWeatherSaga() {
@@ -46,7 +56,11 @@ export function* fetchCountryWeatherSaga() {
     );
     const weather: ICountryWeather = yield call(
       api,
-      countryWeatherURL(country.capital)
+      countryWeatherURL(
+        country.name === "Yemen"
+          ? `${country.name} ${country.capital}`
+          : country.capital
+      )
     );
     yield put(getCountryWeatherSuccess(weather));
   } catch (error) {

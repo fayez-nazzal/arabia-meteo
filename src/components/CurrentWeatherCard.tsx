@@ -19,15 +19,25 @@ const CurrentWeatherCard = (props: PropTypes) => {
     <Card className={clsx(classes.root, props.className)}>
       <CardContent className={classes.content}>
         <div className={classes.media}>
-          <Typography variant="body1">Last update</Typography>
-          <Typography variant="body2">{props.weather.last_updated}</Typography>
+          <div className={classes.lastUpdated}>
+            <Typography variant="body1">Last update</Typography>
+            <Typography variant="body2">
+              {props.weather.last_updated}
+            </Typography>
+          </div>
           <div className={classes.tempMedia}>
-            <img width="140px" src={props.weather.condition.icon} alt="icon" />
+            <img
+              className={classes.weatherIcon}
+              src={props.weather.condition.icon}
+              alt="icon"
+            />
             <TemperatureText temp={props.weather.temp_c} />
           </div>
-          <Typography variant="h5">{props.weather.condition.text}</Typography>
+          <Typography variant="h5" className={classes.conditionText}>
+            {props.weather.condition.text}
+          </Typography>
         </div>
-        <div className={classes.info}>
+        <div className={clsx(classes.info, classes.flexSm)}>
           <div className={classes.infoLine}>
             <Typography variant="h6">Feels Like</Typography>
             <Typography variant="body1" className={classes.infoLineValue}>
@@ -63,17 +73,28 @@ const CurrentWeatherCard = (props: PropTypes) => {
 
 export default CurrentWeatherCard;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    width: "60%",
+    [theme.breakpoints.up("sm")]: {
+      width: "auto",
+    },
   },
   content: {
     display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     flex: "1 1 auto",
     backgroundColor: "#f9f9f9",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "row",
+    },
   },
   media: {
     display: "flex",
+    justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
   },
@@ -85,9 +106,11 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    marginLeft: "28px",
-    paddingLeft: "28px",
-    borderLeft: "1px solid #777777",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: "28px",
+      paddingLeft: "28px",
+      borderLeft: "1px solid #777777",
+    },
   },
   infoLine: {
     display: "flex",
@@ -98,11 +121,40 @@ const useStyles = makeStyles({
     marginLeft: "140px",
   },
   hr: {
+    display: "none",
     marginLeft: "0",
     marginRight: "0",
     border: 0,
     height: "1px",
     background: "#777",
     backgroundImage: "linear-gradient(to right, #bbb, #777, #bbb)",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+    },
   },
-});
+  lastUpdated: {
+    display: "flex",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexDirection: "column",
+  },
+  conditionText: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+    },
+  },
+  flexSm: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "flex",
+    },
+  },
+  weatherIcon: {
+    wdith: "90px",
+    [theme.breakpoints.up("sm")]: {
+      width: "140px",
+    },
+  },
+}));

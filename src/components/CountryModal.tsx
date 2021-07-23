@@ -18,6 +18,7 @@ import {
 } from "../redux/actions";
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import ForecastWeatherCard from "./ForecastWeatherCard";
+import clsx from "clsx";
 
 const CountryModal = () => {
   const dispatch = useDispatch();
@@ -84,7 +85,7 @@ const CountryModal = () => {
               className={classes.currentCard}
             />
           )}
-          <Typography variant="h5" className={classes.mt}>
+          <Typography variant="h5" className={clsx(classes.mt, classes.mb)}>
             3 Day Forecast
           </Typography>
           <div className={classes.forecastCards}>
@@ -119,17 +120,23 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     animation: "$backdropAnimation 2s ease-in",
-    padding: "1.5em",
     backgroundColor: "rgba(232, 232, 232, 0.4)",
-    boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
     backdropFilter: "blur(2.5px)",
     WebkitBackdropFilter: "blur(2.5px)",
-    borderRadius: "10px",
     boxSizing: "border-box",
-    border: "3px solid rgba(232, 232, 232, 0.38)",
     outline: "none !important",
     zIndex: 10,
     transition: "all 0.16s ease-in",
+    height: "100vh",
+    width: "100vw",
+    [theme.breakpoints.up("sm")]: {
+      height: "auto",
+      width: "auto",
+      padding: "1.5em",
+      border: "3px solid rgba(232, 232, 232, 0.38)",
+      borderRadius: "10px",
+      boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.37 )",
+    },
   },
   flexCenter: {
     display: "flex",
@@ -144,10 +151,19 @@ const useStyles = makeStyles((theme) => ({
   },
   forecastCards: {
     display: "flex",
+    flexDirection: "column",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "row",
+    },
   },
   forecastItem: {
-    margin: "1rem",
-    width: "230px",
+    width: "280px",
+    margin: "0.5rem",
+    flex: 1,
+    [theme.breakpoints.up("sm")]: {
+      margin: "1rem",
+      width: "230px",
+    },
   },
   inlineText: {
     fontSize: "22px",
@@ -166,5 +182,8 @@ const useStyles = makeStyles((theme) => ({
   },
   mt: {
     marginTop: "0.2rem",
+  },
+  mb: {
+    marginBottom: "0.5rem",
   },
 }));

@@ -1,4 +1,4 @@
-import { put, takeLatest, call } from "redux-saga/effects";
+import { put, takeLatest, call, select } from "redux-saga/effects";
 import { EActionTypes } from "./types";
 import {
   rootSaga,
@@ -44,9 +44,9 @@ it("correct call and action ~ countries", () => {
 it("correct call and action ~ country weather", () => {
   const generator = fetchCountryWeatherSaga();
 
+  generator.next(); // for select
   const resp = generator.next().value;
-
-  expect(resp).toEqual(call(api, countryWeatherURL));
+  expect(resp).toEqual(call(api, countryWeatherURL("Palestine")));
   expect(generator.next().value).toEqual(
     put({ type: EActionTypes.GET_COUNTRY_WEATHER_SUCCESS })
   );
@@ -55,9 +55,10 @@ it("correct call and action ~ country weather", () => {
 it("correct call and action ~ country weather forecast", () => {
   const generator = fetchCountryWeatherForecastSaga();
 
-  const resp = generator.next().value;
+  generator.next(); // for select
+  const resp = generator.next();
 
-  expect(resp).toEqual(call(api, countryWeatherForecastURL));
+  expect(resp).toEqual(call(api, countryWeatherForecastURL("Kuwait")));
   expect(generator.next().value).toEqual(
     put({ type: EActionTypes.GET_COUNTRY_WEATHER_FORECAST_SUCCESS })
   );

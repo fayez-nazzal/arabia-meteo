@@ -1,12 +1,21 @@
-import CountriesList from "./CountriesList";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import BackgroundImage from "./BackgroundImage";
-import CountryModal from "./CountryModal";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
 import theme from "./Theme";
+import CountriesList from "./CountriesList";
+import CountryModal from "./CountryModal";
+import { getCountries } from "../redux/actions";
+import BackgroundImage from "./BackgroundImage";
 
 function App() {
   const classes = useStyles();
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCountries());
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

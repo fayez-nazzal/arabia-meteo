@@ -24,10 +24,14 @@ const TemperatureText = (props: PropTypes) => {
 
 export default TemperatureText;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    marginLeft: "-22px",
+    marginLeft: "-16px",
+
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: "-20px",
+    },
   },
   tempUnit: {
     display: "flex",
@@ -39,4 +43,4 @@ const useStyles = makeStyles({
     fontSize: "20px",
     color: "#777777",
   },
-});
+}));
