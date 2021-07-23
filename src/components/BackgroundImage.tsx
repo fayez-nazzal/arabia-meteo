@@ -17,11 +17,12 @@ const BackgroundImage = () => {
         <img
           className={classes.image}
           src={hoverCountry.image}
+          key={hoverCountry.name}
           alt={hoverCountry.name}
         />,
       ]);
-    } else {
     }
+    // eslint-disable-next-line
   }, [hoverCountry]);
 
   return <>{images}</>;
@@ -40,6 +41,8 @@ const useStyles = makeStyles<never, IStylesProps>({
     right: 0,
     bottom: 0,
     animation: "$fadeIn 0.36s ease-in-out",
+    width: "100vw",
+    height: "100vh",
   },
   "@keyframes fadeIn": {
     "0%": {
