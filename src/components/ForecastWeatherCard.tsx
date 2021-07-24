@@ -58,10 +58,8 @@ const useStyles = makeStyles((theme) => ({
   },
   tempMedia: {
     display: "flex",
+    justifyContent: "center",
     alignItems: "center",
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
-    },
   },
   showSm: {
     display: "none",
